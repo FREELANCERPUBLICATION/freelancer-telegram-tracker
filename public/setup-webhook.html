@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect Telegram Tracker</title>
+  <style>
+    body{font:16px Arial,sans-serif;background:#f2f7fc;color:#17365d;display:grid;place-items:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box}
+    main{background:white;padding:28px;border-radius:16px;max-width:460px;width:100%;box-shadow:0 8px 30px #1234}
+    input,button{width:100%;padding:13px;border-radius:9px;box-sizing:border-box;margin-top:12px;font-size:16px}
+    input{border:1px solid #b8cce0}button{border:0;background:#126bd1;color:white;font-weight:bold;cursor:pointer}
+    #result{white-space:pre-wrap;line-height:1.5;margin-top:16px}
+  </style>
+</head>
+<body>
+  <main>
+    <h2>Connect Telegram join-request tracking</h2>
+    <p>Enter the setup key you saved in Netlify Environment Variables. This page does not ask for your Telegram bot token.</p>
+    <form id="setup-form">
+      <input id="setup-key" type="password" autocomplete="off" placeholder="Webhook setup key" required>
+      <button type="submit">Connect Telegram webhook</button>
+    </form>
+    <p id="result" role="status"></p>
+  </main>
+  <script>
+    document.getElementById('setup-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const result = document.getElementById('result');
+      result.textContent = 'Connecting…';
+      try {
+        const response = await fetch('/.netlify/functions/setup-telegram-webhook', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ key: document.getElementById('setup-key').value })
+        });
+        const data = await response.json();
+        result.textContent = response.ok && data.ok
+          ? 'Connected successfully. Telegram will now send join requests to the tracker. You can close this page.'
+          : `Setup failed: ${data.error || 'Unknown error'}`;
+      } catch {
+        result.textContent = 'Could not connect. Check that the Netlify deployment is complete and try again.';
+      }
+    });
+  </script>
+</body>
+</html>
