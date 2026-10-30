@@ -18,7 +18,7 @@ export default async (request) => {
 
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const webhookSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
-  const siteUrl = process.env.URL;
+  const siteUrl = 'https://amazing-dusk-4da606.netlify.app';
   if (!botToken || !webhookSecret || !siteUrl) {
     return json({ ok: false, error: 'Missing TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET, or Netlify URL environment variable' }, 500);
   }
