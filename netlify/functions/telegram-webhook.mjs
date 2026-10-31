@@ -45,8 +45,9 @@ export default async (request) => {
   const endpoint = `https://graph.facebook.com/${apiVersion}/${encodeURIComponent(pixelId)}/events?access_token=${encodeURIComponent(accessToken)}`;
 
   const payload = {
-    data: [{
-      event_name: 'TelegramJoinRequest',
+  test_event_code: "TEST45594",
+  data: [{
+    event_name: 'TelegramJoinRequest',
       event_time: eventTime,
       event_id: eventId,
       action_source: 'other',
