@@ -63,6 +63,12 @@ export default async (request) => {
       body: JSON.stringify(payload)
     });
     const metaResult = await metaResponse.json().catch(() => ({}));
+    
+    console.log('META DEBUG', {
+  status: metaResponse.status,
+  response: metaResult,
+  testEventCodeSent: Boolean(payload.test_event_code)
+});
     if (!metaResponse.ok || metaResult.error) {
       console.error('Meta CAPI rejected TelegramJoinRequest', JSON.stringify(metaResult));
       return json({ ok: false, error: 'Meta CAPI request failed' }, 502);
