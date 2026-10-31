@@ -67,7 +67,7 @@ export default async (request) => {
     console.log('META DEBUG', {
   status: metaResponse.status,
   response: metaResult,
-  testEventCodeSent: Boolean(payload.test_event_code)
+  testEventCode: payload.test_event_code
 });
     if (!metaResponse.ok || metaResult.error) {
       console.error('Meta CAPI rejected TelegramJoinRequest', JSON.stringify(metaResult));
